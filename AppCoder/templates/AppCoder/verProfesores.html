@@ -1,0 +1,32 @@
+{% extends "AppCoder/padre.html" %}
+
+{% block titulo %}
+    Aquí puedes ver los profesores
+{% endblock %}
+
+{% block botonTitulo %}
+    <div class="col-auto"><a href="/AppCoder/crearProfesor"><button class="btn btn-primary">Crear profesor</button></a></div>
+{% endblock %}
+
+
+
+
+{% block resultados %}
+
+{% for x in listaProfes %}
+<p>___________________</p>
+<h4>{{x.nombre}} {{x.apellido}} </h4>
+<span>Email: </span>{{x.email}} <br>
+<span>Profesión: </span>{{x.profesion}} <br>
+<span>Edad: </span>{{x.edad}} <br>
+<p>___________________</p>
+{% endfor %}
+
+{% endblock %}
+
+{% block botonBuscar %}
+<div class="row justify-content-center">
+<div class="col-auto"><a href="/AppCoder/buscarProfesor"><button class="btn btn-primary">Buscar profesor</button></a></div>
+</div>
+<br>
+{% endblock %}

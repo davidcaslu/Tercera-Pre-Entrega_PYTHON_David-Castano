@@ -1,0 +1,19 @@
+{% extends "AppCoder/padre.html" %}
+
+{% block titulo %}
+    Aquí puedes buscar un profesor
+{% endblock %}
+
+{% block formulario %}
+
+<p>Ingresa el profesor que quieres buscar</p>
+
+<form action="/AppCoder/resultadoBusquedaProfesor" method = "GET">
+    <input type="text" name="nombre">
+    <input type="submit" value="buscar">
+</form>
+{% endblock %}
+
+
+
+

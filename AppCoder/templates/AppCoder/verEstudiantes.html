@@ -1,0 +1,31 @@
+{% extends "AppCoder/padre.html" %}
+
+{% block titulo %}
+    Aquí puedes ver los estudiantes
+{% endblock %}
+
+{% block botonTitulo %}
+    <div class="col-auto"><a href="/AppCoder/crearEstudiantes"><button class="btn btn-primary">Crear Estudiante</button></a></div>
+{% endblock %}
+
+
+
+{% block resultados %}
+
+{% for x in listaEstudiantes %}
+<p>___________________</p>
+<h4>{{x.nombre}} {{x.apellido}} </h4>
+<span>Email: </span>{{x.email}} <br>
+<span>Comisión: </span>{{x.comision}} <br>
+<span>Email: </span>{{x.email}} <br>
+<p>___________________</p>
+{% endfor %}
+
+{% endblock %}
+
+{% block botonBuscar %}
+<div class="row justify-content-center">
+<div class="col-auto"><a href="/AppCoder/buscarEstudiante"><button class="btn btn-primary">Buscar estudiante</button></a></div>
+</div>
+<br>
+{% endblock %}

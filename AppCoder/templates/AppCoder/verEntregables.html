@@ -1,0 +1,30 @@
+{% extends "AppCoder/padre.html" %}
+
+{% block titulo %}
+    Aquí puedes ver los entregables
+{% endblock %}
+
+{% block botonTitulo %}
+    <div class="col-auto"><a href="/AppCoder/crearEntregable"><button class="btn btn-primary">Crear entregable</button></a></div>
+{% endblock %}
+
+
+
+{% block resultados %}
+
+{% for x in listaEntregables %}
+<p>___________________</p>
+<h4>{{x.nombre}}</h4>
+<span>Fecha entrega: </span>{{x.fechaEntrega}} <br>
+<span>Entregado: </span>{{x.entregado}} <br>
+<p>___________________</p>
+{% endfor %}
+
+{% endblock %}
+
+{% block botonBuscar %}
+<div class="row justify-content-center">
+<div class="col-auto"><a href="/AppCoder/buscarEntregable"><button class="btn btn-primary">Buscar entregable</button></a></div>
+</div>
+<br>
+{% endblock %}

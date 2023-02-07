@@ -1,0 +1,19 @@
+{% extends "AppCoder/padre.html" %}
+
+{% block titulo %}
+    Aquí puedes buscar la camada
+{% endblock %}
+
+{% block formulario %}
+
+<p>Ingresa el número de camada que quieres buscar</p>
+
+<form action="/AppCoder/resultadoBusquedaCamada" method = "GET">
+    <input type="number" name="camada">
+    <input type="submit" value="buscar">
+</form>
+{% endblock %}
+
+
+
+

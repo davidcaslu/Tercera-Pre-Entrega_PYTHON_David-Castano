@@ -1,0 +1,20 @@
+{% extends "AppCoder/padre.html" %}
+
+{% block titulo %}
+    Aquí puedes buscar la camada
+{% endblock %}
+
+{% block resultados %}
+
+<p>Estamos buscando a la camada número: {{camada}}</p>
+
+<p>El curso correspondiente a esa camada es:</p>
+{% for x in resultado %}
+<h3>{{x.nombre}}</h3>
+{% endfor %}
+
+{% endblock %}
+
+
+
+

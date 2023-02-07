@@ -1,0 +1,16 @@
+{% extends "AppCoder/padre.html" %}
+
+{% block titulo %}
+    Aquí puedes buscar un estudiante
+{% endblock %}
+
+{% block formulario %}
+
+<p>Ingresa el nombre del estudiante que quieres buscar</p>
+
+<form action="/AppCoder/resultadoBusquedaEstudiante" method = "GET">
+    <input type="text" name="nombre">
+    <input type="submit" value="buscar">
+</form>
+{% endblock %}
+

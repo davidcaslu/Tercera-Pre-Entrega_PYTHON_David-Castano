@@ -1,0 +1,20 @@
+{% extends "AppCoder/padre.html" %}
+
+{% block titulo %}
+Estos son los resultados de tu busqueda de entregables
+{% endblock %}
+
+{% block resultados %}
+
+<p>Estamos buscando a los entregables de nombre: {{nombre}}</p>
+
+<p>Estos son los resultados:</p>
+{% for x in resultado %}
+<h3>{{x.nombre}}</h3>
+<span>Fecha:</span> {{x.fechaEntrega}}
+
+<p>-----------------------</p>
+{% endfor %}
+
+{% endblock %}
+

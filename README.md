@@ -5,3 +5,12 @@ Se  hizo una adaptación de la plantilla utilizada por el profesor en el curso.
 Y el botón de registrarse se dejó inactivo para hacer uso de él después.
 
 Después de correr el servidor, se puede iniciar el recorrido desde cualquier página. Sin embargo se recomienda iniciar en http://127.0.0.1:8000/AppCoder/inicio
+
+
+Los datos de uno de los superusuarios es:
+
+User:
+davidcl
+
+password:
+coderhouse

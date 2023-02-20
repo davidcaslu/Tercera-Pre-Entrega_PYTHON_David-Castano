@@ -6,12 +6,14 @@
 
 {% block resultados %}
 
-<p>Estamos buscando a los estudiantes de nombre: {{nombre}}</p>
+<p>Estamos buscando a los estudiantes de identificación: {{identificacion}}</p>
 
 <p>Estos son los resultados:</p>
 {% for x in resultado %}
-<h3>{{x.nombre}}   {{x.apellido}}</h3>
-<span>Email:</span>{{x.email}}
+<h4>{{x.nombre}}  {{x.apellido}}</h4>
+<span>Identificacion: </span>{{x.identificacion}} <br>
+<span>Comisión:</span>{{x.comision}}<br>
+<span>Email:</span>{{x.email}}<br>
 <p>-----------------------</p>
 {% endfor %}
 

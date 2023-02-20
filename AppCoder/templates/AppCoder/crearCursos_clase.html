@@ -1,0 +1,14 @@
+<!-- Esta página esta creada con clases en vez de funciones -->
+
+{% extends "AppCoder/padre.html" %}
+
+{% block titulo %}
+    Aquí vamos a crear un curso
+{% endblock %}
+
+{% block formulario %}
+<form action="" method="POST"> {% csrf_token %}
+    {{form.as_p}}
+    <input type = "submit" value="Enviar">
+</form>
+{% endblock %}

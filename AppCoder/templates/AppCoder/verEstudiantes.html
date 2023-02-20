@@ -11,14 +11,19 @@
 
 
 {% block resultados %}
-
+<br>
 {% for x in listaEstudiantes %}
-<p>___________________</p>
+
 <h4>{{x.nombre}} {{x.apellido}} </h4>
+<span>Identificacion: </span>{{x.identificacion}} <br>
 <span>Email: </span>{{x.email}} <br>
 <span>Comisión: </span>{{x.comision}} <br>
-<span>Email: </span>{{x.email}} <br>
+
+<a href="{% url 'borrarEstudiantes' x.identificacion %}"><button>Borrar</button></a>
+<a href="{% url 'editarEstudiante' x.identificacion %}"><button>Editar</button></a>
+
 <p>___________________</p>
+
 {% endfor %}
 
 {% endblock %}

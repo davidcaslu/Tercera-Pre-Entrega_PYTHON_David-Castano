@@ -12,15 +12,23 @@
 
 
 {% block resultados %}
-
+<br>
 {% for x in listaProfes %}
-<p>___________________</p>
+
 <h4>{{x.nombre}} {{x.apellido}} </h4>
+<span>Identificacion: </span>{{x.identificacion}} <br>
 <span>Email: </span>{{x.email}} <br>
 <span>Profesión: </span>{{x.profesion}} <br>
 <span>Edad: </span>{{x.edad}} <br>
+
+<a href="{% url 'borrarProfesores' x.identificacion %}"><button>Borrar</button></a>
+<a href="{% url 'editarProfesor' x.identificacion %}"><button>Editar</button></a>
+
 <p>___________________</p>
+
 {% endfor %}
+
+
 
 {% endblock %}
 

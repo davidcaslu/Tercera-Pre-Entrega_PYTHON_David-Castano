@@ -17,12 +17,29 @@ urlpatterns = [
     path('crearEntregable', crearEntregable, name='crearEntregable'),
 
     path('buscarEstudiante', buscarEstudiante, name='buscarEstudiante'),
-    path('buscarCamada', buscarCamada, name='buscarCamada'),
+    path('buscarCurso', buscarCamada, name='buscarCurso'),
     path('buscarProfesor', buscarProfesor, name='buscarProfesor'),
     path('buscarEntregable', buscarEntregable, name='buscarEntregable'),
 
-    path('resultadoBusquedaCamada', resultadoBusquedaCamada, name='resultadoBusquedaCamada'),
+    path('resultadoBusquedaCurso', resultadoBusquedaCamada, name='resultadoBusquedaCurso'),
     path('resultadoBusquedaProfesor', resultadoBusquedaProfesor, name='resultadoBusquedaProfesor'),
     path('resultadoBusquedaEstudiante', resultadoBusquedaEstudiante, name='resultadoBusquedaEstudiante'),
     path('resultadoBusquedaEntregable', resultadoBusquedaEntregable, name='resultadoBusquedaEntregable'),
+
+    path('borrarProfesores/<profesor_identificacion>', borrarProfesores, name='borrarProfesores'),
+    path('borrarEstudiantes/<estudiante_identificacion>', borrarEstudiantes, name='borrarEstudiantes'),
+    path('borrarCurso/<curso_camada>', borrarCursos, name='borrarCursos'),
+    path('borrarEntregable/<entregable_nombre>', borrarEntregable, name='borrarEntregables'),
+
+    path('editarProfesor/<profesor_identificacion>', editarProfesor, name='editarProfesor'),
+    path('editarEstudiante/<estudiante_identificacion>', editarEstudiante, name='editarEstudiante'),
+    path('editarCurso/<curso_camada>', editarCurso, name='editarCurso'),
+    path('editarEntregable/<entregable_nombre>', editarEntregable, name='editarEntregable'),
+
+    path('cursos/clase', CursoLista.as_view(), name='Ver cursos clase'),
+    path('crearCursos/clase', CursoCrear.as_view(), name='Crear cursos clase'),
+    path('borrarCursos/clase/<int:pk>', CursoBorrar.as_view(), name='BorrarCursosClase'),
+    path('editarCursos/clase/<int:pk>', CursoEditar.as_view(), name='EditarCursosClase'),
+
+
 ]

@@ -1,0 +1,15 @@
+{% extends "AppCoder/padre.html" %}
+
+{% block titulo %}
+Estos son los resultados de tu búsqueda de estudiante
+{% endblock %}
+
+{% block resultados %}
+
+<br>
+<h4>No enviaste datos</h4>
+<a href="{% url 'Estudiantes' %}"><button class="btn btn-primary">Volver a estudiantes</button></a>
+<p></p>
+{% endblock %}
+
+

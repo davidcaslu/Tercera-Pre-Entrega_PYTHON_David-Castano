@@ -6,10 +6,10 @@
 
 {% block formulario %}
 
-<p>Ingresa el nombre del estudiante que quieres buscar</p>
+<p>Ingresa la identificación del estudiante que quieres buscar</p>
 
 <form action="/AppCoder/resultadoBusquedaEstudiante" method = "GET">
-    <input type="text" name="nombre">
+    <input type="text" name="identificacion">
     <input type="submit" value="buscar">
 </form>
 {% endblock %}

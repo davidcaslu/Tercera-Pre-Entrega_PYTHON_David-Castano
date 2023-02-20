@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from AppCoder.models import *
 from AppCoder.forms import *
+from django.views.generic import ListView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 # Create your views here.
 
@@ -9,8 +11,7 @@ def inicio(request):
     return render(request, "AppCoder/index.html")
 
 def agregar_profesor(request):
-
-    profe1 = Profesor(nombre = "David", apellido = "Castaño", email = "davidcaslu@gmail.com", profesion = "Audiovisual", edad = 22)
+    profe1 = Profesor(nombre = "David", apellido = "Castaño", identificacion = "123567", email = "davidcaslu@gmail.com", profesion = "Audiovisual", edad = 22)
     profe1.save()
     return HttpResponse("Hemos agregado a un profesor a la base de datos.")
 
@@ -53,8 +54,8 @@ def crearEstudiantes(request): #crear formulario con django
         miFormulario = EstudianteFormulario(request.POST)
         if miFormulario.is_valid(): #valida que los datos estén bien
             infoDict = miFormulario.cleaned_data #la info del formulario se pasa a tipo diccionario
-            curso1 = Estudiante(nombre=infoDict["nombre"], apellido=infoDict["apellido"], comision=infoDict["comision"], email=infoDict["email"])
-            curso1.save()
+            estudiante1 = Estudiante(nombre=infoDict["nombre"], apellido=infoDict["apellido"], identificacion=infoDict["identificacion"], comision=infoDict["comision"], email=infoDict["email"])
+            estudiante1.save()
 
         return render(request, "AppCoder/index.html")
     
@@ -84,7 +85,7 @@ def crearProfesor(request):
         miFormulario = ProfesorFormulario(request.POST)
         if miFormulario.is_valid(): #valida que los datos estén bien
             infoDict = miFormulario.cleaned_data #la info del formulario se pasa a tipo diccionario
-            profesor1 = Profesor(nombre=infoDict["nombre"], apellido=infoDict["apellido"], email=infoDict["email"], profesion=infoDict["profesion"], edad=infoDict["edad"])
+            profesor1 = Profesor(nombre=infoDict["nombre"], apellido=infoDict["apellido"], identificacion=infoDict["identificacion"], email=infoDict["email"], profesion=infoDict["profesion"], edad=infoDict["edad"])
             profesor1.save()
 
         return render(request, "AppCoder/index.html")
@@ -111,7 +112,7 @@ def crearEntregable(request):
 
 
 def buscarCamada(request):
-    return render(request, "AppCoder/buscarCamada.html")
+    return render(request, "AppCoder/buscarCurso.html")
 
 def buscarProfesor(request):
     return render(request, "AppCoder/buscarProfesor.html")
@@ -126,14 +127,17 @@ def resultadoBusquedaProfesor(request):
 
     if request.method == "GET":
 
-        nombreBusqueda = request.GET['nombre']
-        profesorResultados = Profesor.objects.filter(nombre__icontains=nombreBusqueda)
-        
+        identificacionBusqueda = request.GET['identificacion']
+        profesorResultados = Profesor.objects.filter(identificacion__icontains=identificacionBusqueda)
+        if identificacionBusqueda != "":
+            return render(request, "AppCoder/resultadoBusquedaProfesor.html", {"identificacion":identificacionBusqueda, "resultado": profesorResultados})
 
-        return render(request, "AppCoder/resultadoBusquedaProfesor.html", {"nombre":nombreBusqueda, "resultado": profesorResultados})
+        elif identificacionBusqueda == "":
+            respuesta = "No enviaste datos"
+            return render(request, "AppCoder/resultadoBusquedaProfesorVacio.html", {"identificacion":respuesta, "resultado": respuesta})
 
     else:
-        respuesta = "No enviaste datos"
+        respuesta = "Raios"
         return HttpResponse(respuesta)
 
 
@@ -141,10 +145,14 @@ def resultadoBusquedaEstudiante(request):
 
     if request.method == "GET":
 
-        nombreBusqueda = request.GET['nombre']
-        estudianteResultados = Estudiante.objects.filter(nombre__icontains=nombreBusqueda)
-
-        return render(request, "AppCoder/resultadoBusquedaEstudiante.html", {"nombre":nombreBusqueda, "resultado":estudianteResultados})
+        identificacionBusqueda = request.GET['identificacion']
+        estudianteResultados = Estudiante.objects.filter(identificacion__icontains=identificacionBusqueda)
+        if identificacionBusqueda != "":
+            return render(request, "AppCoder/resultadoBusquedaEstudiante.html", {"identificacion":identificacionBusqueda, "resultado":estudianteResultados})
+        
+        elif identificacionBusqueda == "":
+            respuesta = "No enviaste datos"
+            return render(request, "AppCoder/resultadoBusquedaEstudianteVacio.html", {"identificacion":respuesta, "resultado": respuesta})
 
     else:
         respuesta = "No enviaste datos"
@@ -156,8 +164,13 @@ def resultadoBusquedaCamada(request):
 
         camadaBusqueda = request.GET['camada']
         cursosResultados = Curso.objects.filter(camada__icontains=camadaBusqueda)
+        if camadaBusqueda != "":
+            return render(request, "AppCoder/resultadoBusquedaCurso.html", {"camada":camadaBusqueda, "resultado":cursosResultados})
+        
+        elif camadaBusqueda == "":
+            respuesta = "No enviaste datos"
+            return render(request, "AppCoder/resultadoBusquedaCursoVacio.html", {"camada":respuesta, "resultado": respuesta})
 
-        return render(request, "AppCoder/resultadoBusquedaCamada.html", {"camada":camadaBusqueda, "resultado":cursosResultados})
 
     else:
         respuesta = "No enviaste datos"
@@ -170,9 +183,145 @@ def resultadoBusquedaEntregable(request):
 
         nombreBusqueda = request.GET['nombre']
         entregableResultados = Entregable.objects.filter(nombre__icontains=nombreBusqueda)
+        if nombreBusqueda != "":
+            return render(request, "AppCoder/resultadoBusquedaEntregable.html", {"nombre":nombreBusqueda, "resultado":entregableResultados})
 
-        return render(request, "AppCoder/resultadoBusquedaEntregable.html", {"nombre":nombreBusqueda, "resultado":entregableResultados})
+        elif nombreBusqueda == "":
+            respuesta = "No enviaste datos"
+            return render(request, "AppCoder/resultadoBusquedaEntregableVacio.html", {"nombre":respuesta, "resultado":respuesta})
 
     else:
         respuesta = "No enviaste datos"
         return HttpResponse(respuesta)
+
+
+def borrarProfesores(request, profesor_identificacion):
+    profesor_elegido = Profesor.objects.get(identificacion = profesor_identificacion)
+    profesor_elegido.delete()
+
+    return render(request, "AppCoder/index.html")
+
+def borrarEstudiantes(request, estudiante_identificacion):
+    estudiante_elegido = Estudiante.objects.get(identificacion = estudiante_identificacion)
+    estudiante_elegido.delete()
+
+    return render(request, "AppCoder/index.html")
+
+def borrarCursos(request, curso_camada):
+    curso_elegido = Curso.objects.get(camada = curso_camada)
+    curso_elegido.delete()
+
+    return render(request, "AppCoder/index.html")
+
+def borrarEntregable(request, entregable_nombre):
+    entregable_elegido = Entregable.objects.get(nombre = entregable_nombre)
+    entregable_elegido.delete()
+
+    return render(request, "AppCoder/index.html")
+
+def editarProfesor(request, profesor_identificacion):
+    profesor_elegido=Profesor.objects.get(identificacion=profesor_identificacion)
+
+    if request.method == 'POST':
+        miFormulario = ProfesorFormulario(request.POST)
+        if miFormulario.is_valid(): #valida que los datos estén bien
+            infoDict = miFormulario.cleaned_data #la info del formulario se pasa a tipo diccionario
+            profesor_elegido.nombre=infoDict["nombre"]
+            profesor_elegido.apellido=infoDict["apellido"]
+            profesor_elegido.identificacion=infoDict["identificacion"]
+            profesor_elegido.email=infoDict["email"]
+            profesor_elegido.profesion=infoDict["profesion"]
+            profesor_elegido.edad=infoDict["edad"]
+
+            profesor_elegido.save()
+
+            return render(request, "AppCoder/index.html")
+
+    else:
+        miFormulario = ProfesorFormulario(initial={"nombre": profesor_elegido.nombre, "apellido": profesor_elegido.apellido, "identificacion": profesor_elegido.identificacion, "email": profesor_elegido.email, "profesion": profesor_elegido.profesion, "edad": profesor_elegido.edad})
+
+    return render(request, "AppCoder/editarProfesor.html", {"formulario1": miFormulario})
+
+def editarEstudiante(request, estudiante_identificacion):
+    estudiante_elegido=Estudiante.objects.get(identificacion=estudiante_identificacion)
+
+    if request.method == 'POST':
+        miFormulario = EstudianteFormulario(request.POST)
+        if miFormulario.is_valid(): #valida que los datos estén bien
+            infoDict = miFormulario.cleaned_data #la info del formulario se pasa a tipo diccionario
+            estudiante_elegido.nombre=infoDict["nombre"]
+            estudiante_elegido.apellido=infoDict["apellido"]
+            estudiante_elegido.identificacion=infoDict["identificacion"]
+            estudiante_elegido.comision =infoDict["comision"]
+            estudiante_elegido.email=infoDict["email"]
+
+            estudiante_elegido.save()
+
+            return render(request, "AppCoder/index.html")
+
+    else:
+        miFormulario = EstudianteFormulario(initial={"nombre": estudiante_elegido.nombre, "apellido": estudiante_elegido.apellido, "identificacion": estudiante_elegido.identificacion, "comision": estudiante_elegido.comision,"email": estudiante_elegido.email})
+
+    return render(request, "AppCoder/editarEstudiante.html", {"formulario1": miFormulario})
+
+def editarCurso(request, curso_camada):
+    curso_elegido=Curso.objects.get(camada=curso_camada)
+
+    if request.method == 'POST':
+        miFormulario = CursoFormulario(request.POST)
+        if miFormulario.is_valid(): #valida que los datos estén bien
+            infoDict = miFormulario.cleaned_data #la info del formulario se pasa a tipo diccionario
+            curso_elegido.nombre=infoDict["nombre"]
+            curso_elegido.camada=infoDict["camada"]
+            curso_elegido.comision =infoDict["comision"]
+
+            curso_elegido.save()
+
+            return render(request, "AppCoder/index.html")
+
+    else:
+        miFormulario = CursoFormulario(initial={"nombre": curso_elegido.nombre, "camada": curso_elegido.camada, "comision": curso_elegido.comision})
+
+    return render(request, "AppCoder/editarCurso.html", {"formulario1": miFormulario})
+
+def editarEntregable(request, entregable_nombre):
+    entregable_elegido=Entregable.objects.get(nombre=entregable_nombre)
+
+    if request.method == 'POST':
+        miFormulario = EntregableFormulario(request.POST)
+        if miFormulario.is_valid(): #valida que los datos estén bien
+            infoDict = miFormulario.cleaned_data #la info del formulario se pasa a tipo diccionario
+            entregable_elegido.nombre=infoDict["nombre"]
+            entregable_elegido.fechaEntrega=infoDict["fechaEntrega"]
+            entregable_elegido.entregado =infoDict["entregado"]
+
+            entregable_elegido.save()
+
+            return render(request, "AppCoder/index.html")
+
+    else:
+        miFormulario = EntregableFormulario(initial={"nombre": entregable_elegido.nombre, "fechaEntrega": entregable_elegido.fechaEntrega, "entregado": entregable_elegido.entregado})
+
+    return render(request, "AppCoder/editarEntregable.html", {"formulario1": miFormulario})
+
+class CursoLista (ListView):
+    model = Curso
+    template_name= "AppCoder/verCursos_clase.html"
+
+class CursoCrear (CreateView):
+    model = Curso
+    fields = ["nombre", "camada", "comision"]
+    template_name = "AppCoder/crearCursos_clase.html"
+    success_url = "/AppCoder/cursos/clase"
+
+class CursoBorrar (DeleteView):
+    model = Curso
+    template_name = "AppCoder/borrarCursos_clase.html"
+    success_url = "/AppCoder/cursos/clase"
+    #Tiene un problema y es que toca poner el ID del curso en la url del navegador
+
+class CursoEditar (UpdateView):
+    model = Curso
+    fields = ["nombre", "camada", "comision"]
+    success_url = "/AppCoder/cursos/clase"
+    #Tiene un problema y es que toca poner el ID del curso en la url del navegador, no es muy claro cual se está eliminando

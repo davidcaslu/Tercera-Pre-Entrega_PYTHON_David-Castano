@@ -11,12 +11,13 @@
 
 
 {% block resultados %}
-
+<br>
 {% for x in listaEntregables %}
-<p>___________________</p>
 <h4>{{x.nombre}}</h4>
 <span>Fecha entrega: </span>{{x.fechaEntrega}} <br>
-<span>Entregado: </span>{{x.entregado}} <br>
+
+<a href="{% url 'borrarEntregables' x.nombre %}"><button>Borrar</button></a>
+<a href="{% url 'editarEntregable' x.nombre %}"><button>Editar</button></a>
 <p>___________________</p>
 {% endfor %}
 

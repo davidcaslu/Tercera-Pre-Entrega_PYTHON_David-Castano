@@ -1,0 +1,36 @@
+<!-- Esta página esta creada con clase en vez de funciones -->
+
+{% extends "AppCoder/padre.html" %}
+
+{% block titulo %}
+    Acá puedes borrar cursos
+{% endblock %}
+
+
+{% block botonTitulo %}
+    <div class="col-auto"><a href="/AppCoder/crearCursos/clase"><button class="btn btn-primary">Crear curso</button></a></div>
+{% endblock %}
+
+
+
+{% block resultados %}
+
+<form action="" method="POST"> {% csrf_token %}
+    ¿Está seguro que desea borrar el curso "{{object.nombre}}"?
+    <br>
+    <input type="submit" value="Enviar">
+    <a href="{% url 'Ver cursos clase' %}"><button>Cancelar</button></a>
+</form>
+
+
+
+
+{% endblock %}
+
+
+{% block botonBuscar %}
+<!-- <div class="row justify-content-center">
+<div class="col-auto"><a href="/AppCoder/buscarCamada"><button class="btn btn-primary">Buscar camada</button></a></div>
+</div>
+<br> -->
+{% endblock %}

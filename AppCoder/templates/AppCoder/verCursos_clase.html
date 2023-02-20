@@ -1,0 +1,38 @@
+<!-- Esta página esta creada con clase en vez de funciones -->
+
+{% extends "AppCoder/padre.html" %}
+
+{% block titulo %}
+    Aquí puedes ver los cursos
+{% endblock %}
+
+
+{% block botonTitulo %}
+    <div class="col-auto"><a href="/AppCoder/crearCursos/clase"><button class="btn btn-primary">Crear curso</button></a></div>
+{% endblock %}
+
+
+
+{% block resultados %}
+
+{% for x in object_list %}
+<p>___________________</p>
+<h4>{{x.nombre}}</h4>
+<span>Camada: </span>{{x.camada}} <br>
+<span>Comisión: </span>{{x.comision}} <br>
+
+<a href="{% url 'BorrarCursosClase' x.id %}"><button>Borrar</button></a>
+<a href="{% url 'EditarCurso' x.camada %}"><button>Editar</button></a>
+
+<p>___________________</p>
+{% endfor %}
+
+{% endblock %}
+
+
+{% block botonBuscar %}
+<div class="row justify-content-center">
+<div class="col-auto"><a href="/AppCoder/buscarCamada"><button class="btn btn-primary">Buscar camada</button></a></div>
+</div>
+<br>
+{% endblock %}

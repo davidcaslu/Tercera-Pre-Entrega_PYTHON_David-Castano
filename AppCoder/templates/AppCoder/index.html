@@ -1,7 +1,11 @@
 {% extends "AppCoder/padre.html" %}
 
 {% block titulo %}
-    ¡Te damos la bienvenida!
+{% if request.user %}
+    ¡Hola {{request.user}}!
+{% else %}
+    ¡Hola, te damos la bienvenida!
+{% endif %}
 {% endblock %}
 
 

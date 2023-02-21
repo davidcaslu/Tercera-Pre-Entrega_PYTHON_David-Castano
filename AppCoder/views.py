@@ -4,11 +4,49 @@ from AppCoder.models import *
 from AppCoder.forms import *
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
 def inicio(request):
     return render(request, "AppCoder/index.html")
+
+def registro (request):
+    if request.method == "POST":
+        miFormulario = RegistroFormulario(request.POST)
+        if miFormulario.is_valid():
+            miFormulario.save()
+            return render (request, "AppCoder/index.html")
+        
+    else:
+        miFormulario = RegistroFormulario()
+    
+    return render(request, "AppCoder/registro.html", {"miFormulario1":miFormulario})
+
+def iniciarSesion(request):
+    if request.method == "POST":
+        miFormulario = AuthenticationForm(request, data = request.POST)
+        if miFormulario.is_valid():
+            usuario = miFormulario.cleaned_data.get("username")
+            contrasena = miFormulario.cleaned_data.get("password")
+
+            miUsuario = authenticate(username=usuario, password=contrasena)
+            if miUsuario:
+                login(request, miUsuario)
+                mensaje = f"{miUsuario}"
+                return render (request, "AppCoder/index.html", {"mensaje":mensaje})
+
+        else:
+            mensaje = f"Datos incorrectos. Vuelve a intentar"
+            return render (request, "AppCoder/index.html", {"mensaje":mensaje})
+        
+    else:
+        miFormulario = AuthenticationForm()
+    
+    return render(request, "AppCoder/iniciarSesion.html", {"miFormulario1":miFormulario})
+
 
 def agregar_profesor(request):
     profe1 = Profesor(nombre = "David", apellido = "Castaño", identificacion = "123567", email = "davidcaslu@gmail.com", profesion = "Audiovisual", edad = 22)
@@ -308,19 +346,19 @@ class CursoLista (ListView):
     model = Curso
     template_name= "AppCoder/verCursos_clase.html"
 
-class CursoCrear (CreateView):
+class CursoCrear (LoginRequiredMixin, CreateView,):
     model = Curso
     fields = ["nombre", "camada", "comision"]
     template_name = "AppCoder/crearCursos_clase.html"
     success_url = "/AppCoder/cursos/clase"
 
-class CursoBorrar (DeleteView):
+class CursoBorrar (LoginRequiredMixin, DeleteView):
     model = Curso
     template_name = "AppCoder/borrarCursos_clase.html"
     success_url = "/AppCoder/cursos/clase"
     #Tiene un problema y es que toca poner el ID del curso en la url del navegador
 
-class CursoEditar (UpdateView):
+class CursoEditar (LoginRequiredMixin, UpdateView):
     model = Curso
     fields = ["nombre", "camada", "comision"]
     success_url = "/AppCoder/cursos/clase"

@@ -1,0 +1,14 @@
+{% extends "AppCoder/padre.html" %}
+
+{% block titulo %}
+    Iniciar sesión
+{% endblock %}
+
+{% block formulario %}
+<form action="" method="POST"> {% csrf_token %}
+    {{miFormulario1.as_p}}
+    <input type = "submit" value="Iniciar sesión">
+</form>
+{% endblock %}
+
+

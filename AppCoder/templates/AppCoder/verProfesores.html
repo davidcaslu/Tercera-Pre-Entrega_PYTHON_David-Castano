@@ -4,10 +4,12 @@
     Aquí puedes ver los profesores
 {% endblock %}
 
-{% block botonTitulo %}
-    <div class="col-auto"><a href="/AppCoder/crearProfesor"><button class="btn btn-primary">Crear profesor</button></a></div>
-{% endblock %}
 
+{% block botonTitulo %}
+{% if request.user.is_authenticated %}
+    <div class="col-auto"><a href="/AppCoder/crearProfesor"><button class="btn btn-primary">Crear profesor</button></a></div>
+{% endif %}
+{% endblock %}
 
 
 
@@ -20,10 +22,10 @@
 <span>Email: </span>{{x.email}} <br>
 <span>Profesión: </span>{{x.profesion}} <br>
 <span>Edad: </span>{{x.edad}} <br>
-
+{% if request.user.is_authenticated %}
 <a href="{% url 'borrarProfesores' x.identificacion %}"><button>Borrar</button></a>
 <a href="{% url 'editarProfesor' x.identificacion %}"><button>Editar</button></a>
-
+{% endif %}
 <p>___________________</p>
 
 {% endfor %}

@@ -6,21 +6,23 @@
 
 
 {% block botonTitulo %}
+{% if request.user.is_authenticated %}
     <div class="col-auto"><a href="/AppCoder/crearCursos"><button class="btn btn-primary">Crear curso</button></a></div>
+{% endif %}
 {% endblock %}
 
 
 
 {% block resultados %}
-
+<br>
 {% for x in listaCursos %}
-<p>___________________</p>
 <h4>{{x.nombre}}</h4>
 <span>Camada: </span>{{x.camada}} <br>
 <span>Comisión: </span>{{x.comision}} <br>
-
+{% if request.user.is_authenticated %}
 <a href="{% url 'borrarCursos' x.camada %}"><button>Borrar</button></a>
 <a href="{% url 'editarCurso' x.camada %}"><button>Editar</button></a>
+{% endif %}
 <p>___________________</p>
 {% endfor %}
 

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -28,3 +29,7 @@ class Curso(models.Model):
     nombre = models.CharField(max_length=40)
     camada = models.IntegerField()
     comision = models.IntegerField()
+
+class AvatarImagen(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    imagen = models.ImageField(upload_to="avatares", null=True, blank=True)

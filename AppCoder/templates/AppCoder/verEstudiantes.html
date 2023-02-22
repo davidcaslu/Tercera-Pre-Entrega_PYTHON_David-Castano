@@ -4,8 +4,11 @@
     Aquí puedes ver los estudiantes
 {% endblock %}
 
+
 {% block botonTitulo %}
+{% if request.user.is_authenticated %}
     <div class="col-auto"><a href="/AppCoder/crearEstudiantes"><button class="btn btn-primary">Crear Estudiante</button></a></div>
+{% endif %}
 {% endblock %}
 
 
@@ -18,10 +21,10 @@
 <span>Identificacion: </span>{{x.identificacion}} <br>
 <span>Email: </span>{{x.email}} <br>
 <span>Comisión: </span>{{x.comision}} <br>
-
+{% if request.user.is_authenticated %}
 <a href="{% url 'borrarEstudiantes' x.identificacion %}"><button>Borrar</button></a>
 <a href="{% url 'editarEstudiante' x.identificacion %}"><button>Editar</button></a>
-
+{% endif %}
 <p>___________________</p>
 
 {% endfor %}

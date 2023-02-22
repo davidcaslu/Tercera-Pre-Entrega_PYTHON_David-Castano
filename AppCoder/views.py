@@ -7,6 +7,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -86,7 +87,7 @@ def crearEstudiantes(request): #Crear formulario con html
 
     return render(request, "AppCoder/index.html")
 """
-
+@login_required
 def crearEstudiantes(request): #crear formulario con django
     if request.method == 'POST':
         miFormulario = EstudianteFormulario(request.POST)
@@ -102,6 +103,7 @@ def crearEstudiantes(request): #crear formulario con django
     
     return render(request, "AppCoder/crearEstudiantes.html", {"formulario1": miFormulario})
 
+@login_required
 def crearCursos(request): #crear formulario con django
     if request.method == 'POST':
         miFormulario = CursoFormulario(request.POST)
@@ -117,7 +119,7 @@ def crearCursos(request): #crear formulario con django
     
     return render(request, "AppCoder/crearCursos.html", {"formulario1": miFormulario})
 
-
+@login_required
 def crearProfesor(request): 
     if request.method == 'POST':
         miFormulario = ProfesorFormulario(request.POST)
@@ -133,6 +135,7 @@ def crearProfesor(request):
     
     return render(request, "AppCoder/crearProfesor.html", {"formulario1": miFormulario})
 
+@login_required
 def crearEntregable(request): 
     if request.method == 'POST':
         miFormulario = EntregableFormulario(request.POST)
@@ -232,31 +235,35 @@ def resultadoBusquedaEntregable(request):
         respuesta = "No enviaste datos"
         return HttpResponse(respuesta)
 
-
+@login_required
 def borrarProfesores(request, profesor_identificacion):
     profesor_elegido = Profesor.objects.get(identificacion = profesor_identificacion)
     profesor_elegido.delete()
 
     return render(request, "AppCoder/index.html")
 
+@login_required
 def borrarEstudiantes(request, estudiante_identificacion):
     estudiante_elegido = Estudiante.objects.get(identificacion = estudiante_identificacion)
     estudiante_elegido.delete()
 
     return render(request, "AppCoder/index.html")
 
+@login_required
 def borrarCursos(request, curso_camada):
     curso_elegido = Curso.objects.get(camada = curso_camada)
     curso_elegido.delete()
 
     return render(request, "AppCoder/index.html")
 
+@login_required
 def borrarEntregable(request, entregable_nombre):
     entregable_elegido = Entregable.objects.get(nombre = entregable_nombre)
     entregable_elegido.delete()
 
     return render(request, "AppCoder/index.html")
 
+@login_required
 def editarProfesor(request, profesor_identificacion):
     profesor_elegido=Profesor.objects.get(identificacion=profesor_identificacion)
 
@@ -280,6 +287,7 @@ def editarProfesor(request, profesor_identificacion):
 
     return render(request, "AppCoder/editarProfesor.html", {"formulario1": miFormulario})
 
+@login_required
 def editarEstudiante(request, estudiante_identificacion):
     estudiante_elegido=Estudiante.objects.get(identificacion=estudiante_identificacion)
 
@@ -302,6 +310,7 @@ def editarEstudiante(request, estudiante_identificacion):
 
     return render(request, "AppCoder/editarEstudiante.html", {"formulario1": miFormulario})
 
+@login_required
 def editarCurso(request, curso_camada):
     curso_elegido=Curso.objects.get(camada=curso_camada)
 
@@ -322,6 +331,7 @@ def editarCurso(request, curso_camada):
 
     return render(request, "AppCoder/editarCurso.html", {"formulario1": miFormulario})
 
+@login_required
 def editarEntregable(request, entregable_nombre):
     entregable_elegido=Entregable.objects.get(nombre=entregable_nombre)
 
@@ -363,3 +373,5 @@ class CursoEditar (LoginRequiredMixin, UpdateView):
     fields = ["nombre", "camada", "comision"]
     success_url = "/AppCoder/cursos/clase"
     #Tiene un problema y es que toca poner el ID del curso en la url del navegador, no es muy claro cual se está eliminando
+
+

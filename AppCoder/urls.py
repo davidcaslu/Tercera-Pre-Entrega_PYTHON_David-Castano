@@ -12,8 +12,6 @@ urlpatterns = [
     path('logOut', LogoutView.as_view(template_name="AppCoder/logout.html"), name='cerrar sesion'),
 
 
-    path('agregar_profe', agregar_profesor),
-    path('agregar_estudiante', agregar_estudiante),
     path('verEstudiantes', estudiantes, name='Estudiantes'),
     path('verProfesores', profesores, name='Profesores'),
     path('verEntregables', entregables, name='Entregables'),
@@ -37,7 +35,7 @@ urlpatterns = [
     path('borrarProfesores/<profesor_identificacion>', borrarProfesores, name='borrarProfesores'),
     path('borrarEstudiantes/<estudiante_identificacion>', borrarEstudiantes, name='borrarEstudiantes'),
     path('borrarCurso/<curso_camada>', borrarCursos, name='borrarCursos'),
-    path('borrarEntregable/<entregable_nombre>', borrarEntregable, name='borrarEntregables'),
+    path('borrarEntregable/<entregable_identificador>', borrarEntregable, name='borrarEntregables'),
 
     path('editarProfesor/<profesor_identificacion>', editarProfesor, name='editarProfesor'),
     path('editarEstudiante/<estudiante_identificacion>', editarEstudiante, name='editarEstudiante'),

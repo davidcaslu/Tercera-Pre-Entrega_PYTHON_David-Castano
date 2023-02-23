@@ -12,18 +12,31 @@
 {% endblock %}
 
 
-
 {% block resultados %}
-<br>
-{% for x in listaEntregables %}
-<h4>{{x.nombre}}</h4>
-<span>Fecha entrega: </span>{{x.fechaEntrega}} <br>
-{% if request.user.is_authenticated %}
-<a href="{% url 'borrarEntregables' x.nombre %}"><button>Borrar</button></a>
-<a href="{% url 'editarEntregable' x.nombre %}"><button>Editar</button></a>
-{% endif %}
-<p>___________________</p>
-{% endfor %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Fecha de entrega</th>
+            {% if request.user.is_authenticated %}
+            <th scope="col">Editar</th>
+            <th scope="col">Borrar</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+    {% for x in listaEntregables %}
+        <tr>
+            <th scope="row">{{x.nombre}}</th>
+            <td>{{x.fechaEntrega}}</td>
+        {% if request.user.is_authenticated %}
+            <td><a href="{% url 'editarCurso' x.identificador %}"><button>Editar</button></a></td>
+            <td><a href="{% url 'borrarCursos' x.identificador %}"><button>Borrar</button></a></td>
+            
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
 
 {% block botonBuscar %}

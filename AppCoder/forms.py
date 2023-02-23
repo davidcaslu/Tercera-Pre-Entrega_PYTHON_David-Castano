@@ -24,6 +24,7 @@ class ProfesorFormulario(forms.Form):
 
 class EntregableFormulario(forms.Form):
     nombre = forms.CharField()
+    identificador = forms.IntegerField()
     fechaEntrega = forms.DateField()
     entregado = forms.BooleanField()
 

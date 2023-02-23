@@ -5,10 +5,14 @@
 {% endblock %}
 
 {% block formulario %}
+<br>
+<div style="width: 400px; margin: 0 auto;">
 <form action="" method="POST"> {% csrf_token %}
-    {{miFormulario1.as_p}}
+    <table class="table table-sm">
+    {{miFormulario1.as_table}}
+    </table>
     <input type = "submit" value="Iniciar sesión">
 </form>
+</div>
+<br>
 {% endblock %}
-
-

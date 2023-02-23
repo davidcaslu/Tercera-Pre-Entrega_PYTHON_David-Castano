@@ -5,8 +5,14 @@
 {% endblock %}
 
 {% block formulario %}
+<br>
+<div style="width: 200px; margin: 0 auto;"></div>
 <form action="" method="POST"> {% csrf_token %}
-    {{formulario1.as_p}}
+        <table class="table table-sm">
+        {{formulario1.as_table}}
+        </table>
     <input type = "submit" value="Enviar">
 </form>
+</div>
+<br>
 {% endblock %}

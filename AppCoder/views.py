@@ -49,18 +49,6 @@ def iniciarSesion(request):
     return render(request, "AppCoder/iniciarSesion.html", {"miFormulario1":miFormulario})
 
 
-def agregar_profesor(request):
-    profe1 = Profesor(nombre = "David", apellido = "Castaño", identificacion = "123567", email = "davidcaslu@gmail.com", profesion = "Audiovisual", edad = 22)
-    profe1.save()
-    return HttpResponse("Hemos agregado a un profesor a la base de datos.")
-
-
-def agregar_estudiante(request):
-
-    estudiante1 = Estudiante(nombre = "David", apellido = "Castaño", comision = 1294)
-    estudiante1.save()
-    return HttpResponse("Hemos agregado a un estudiante a la base de datos.")
-
 def estudiantes(request):
     listaEstudiantes = Estudiante.objects.all()
     return render(request, "AppCoder/verEstudiantes.html", {"listaEstudiantes":listaEstudiantes})
@@ -77,16 +65,6 @@ def cursos(request):
     listaCursos = Curso.objects.all()
     return render(request, "AppCoder/verCursos.html", {"listaCursos":listaCursos})
 
-"""
-#crear estudiante con html
-def crearEstudiantes(request): #Crear formulario con html
-    if request.method == 'POST':
-        estudiante = Estudiante (nombre= request.POST['nombre'], apellido=request.POST['apellido'], comision=request.POST['comision'], email=request.POST['email'])
-        estudiante.save()
-        return render(request, "AppCoder/crearEstudiantes.html")
-
-    return render(request, "AppCoder/index.html")
-"""
 @login_required
 def crearEstudiantes(request): #crear formulario con django
     if request.method == 'POST':
@@ -141,7 +119,7 @@ def crearEntregable(request):
         miFormulario = EntregableFormulario(request.POST)
         if miFormulario.is_valid(): #valida que los datos estén bien
             infoDict = miFormulario.cleaned_data #la info del formulario se pasa a tipo diccionario
-            entregable1 = Entregable(nombre=infoDict["nombre"], fechaEntrega=infoDict["fechaEntrega"], entregado=infoDict["entregado"])
+            entregable1 = Entregable(nombre=infoDict["nombre"], identificador=infoDict["identificador"],fechaEntrega=infoDict["fechaEntrega"], entregado=infoDict["entregado"])
             entregable1.save()
 
         return render(request, "AppCoder/index.html")
@@ -222,10 +200,10 @@ def resultadoBusquedaEntregable(request):
 
     if request.method == "GET":
 
-        nombreBusqueda = request.GET['nombre']
-        entregableResultados = Entregable.objects.filter(nombre__icontains=nombreBusqueda)
+        identificadorBusqueda = request.GET['nombre']
+        entregableResultados = Entregable.objects.filter(nombre__icontains=identificadorBusqueda)
         if nombreBusqueda != "":
-            return render(request, "AppCoder/resultadoBusquedaEntregable.html", {"nombre":nombreBusqueda, "resultado":entregableResultados})
+            return render(request, "AppCoder/resultadoBusquedaEntregable.html", {"identificador":identificadorBusqueda, "resultado":entregableResultados})
 
         elif nombreBusqueda == "":
             respuesta = "No enviaste datos"
@@ -257,8 +235,8 @@ def borrarCursos(request, curso_camada):
     return render(request, "AppCoder/index.html")
 
 @login_required
-def borrarEntregable(request, entregable_nombre):
-    entregable_elegido = Entregable.objects.get(nombre = entregable_nombre)
+def borrarEntregable(request, entregable_identificador):
+    entregable_elegido = Entregable.objects.get(identificador = entregable_identificador)
     entregable_elegido.delete()
 
     return render(request, "AppCoder/index.html")

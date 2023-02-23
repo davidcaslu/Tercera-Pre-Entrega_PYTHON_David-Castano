@@ -14,17 +14,34 @@
 
 
 {% block resultados %}
-<br>
-{% for x in listaCursos %}
-<h4>{{x.nombre}}</h4>
-<span>Camada: </span>{{x.camada}} <br>
-<span>Comisión: </span>{{x.comision}} <br>
-{% if request.user.is_authenticated %}
-<a href="{% url 'borrarCursos' x.camada %}"><button>Borrar</button></a>
-<a href="{% url 'editarCurso' x.camada %}"><button>Editar</button></a>
-{% endif %}
-<p>___________________</p>
-{% endfor %}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Camada</th>
+            <th scope="col">Comisión</th>
+            {% if request.user.is_authenticated %}
+            <th scope="col">Editar</th>
+            <th scope="col">Borrar</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+    {% for x in listaCursos %}
+        <tr>
+            <th scope="row">{{x.nombre}}</th>
+            <td>{{x.camada}}</td>
+            <td>{{x.comision}}</td>
+        {% if request.user.is_authenticated %}
+            <td><a href="{% url 'editarCurso' x.camada %}"><button>Editar</button></a></td>
+            <td><a href="{% url 'borrarCursos' x.camada %}"><button>Borrar</button></a></td>
+            
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}
 
@@ -35,3 +52,7 @@
 </div>
 <br>
 {% endblock %}
+
+
+
+

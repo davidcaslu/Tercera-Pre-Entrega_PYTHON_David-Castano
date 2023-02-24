@@ -34,8 +34,8 @@
                 <td>{{x.email}}</td>
                 <td>{{x.comision}}</td>
             {% if request.user.is_authenticated %}
-                <td><a href="{% url 'editarCurso' x.identificacion %}"><button>Editar</button></a></td>
-                <td><a href="{% url 'borrarCursos' x.identificacion %}"><button>Borrar</button></a></td>
+                <td><a href="{% url 'editarEstudiante' x.identificacion %}"><button>Editar</button></a></td>
+                <td><a href="{% url 'borrarEstudiantes' x.identificacion %}"><button>Borrar</button></a></td>
                 
             {% endif %}
             {% endfor %}

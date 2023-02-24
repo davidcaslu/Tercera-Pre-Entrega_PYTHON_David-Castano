@@ -200,10 +200,10 @@ def resultadoBusquedaEntregable(request):
 
     if request.method == "GET":
 
-        identificadorBusqueda = request.GET['nombre']
-        entregableResultados = Entregable.objects.filter(nombre__icontains=identificadorBusqueda)
+        nombreBusqueda = request.GET['nombre']
+        entregableResultados = Entregable.objects.filter(nombre__icontains=nombreBusqueda)
         if nombreBusqueda != "":
-            return render(request, "AppCoder/resultadoBusquedaEntregable.html", {"identificador":identificadorBusqueda, "resultado":entregableResultados})
+            return render(request, "AppCoder/resultadoBusquedaEntregable.html", {"nombre":nombreBusqueda, "resultado":entregableResultados})
 
         elif nombreBusqueda == "":
             respuesta = "No enviaste datos"
@@ -247,8 +247,8 @@ def editarProfesor(request, profesor_identificacion):
 
     if request.method == 'POST':
         miFormulario = ProfesorFormulario(request.POST)
-        if miFormulario.is_valid(): #valida que los datos estén bien
-            infoDict = miFormulario.cleaned_data #la info del formulario se pasa a tipo diccionario
+        if miFormulario.is_valid():
+            infoDict = miFormulario.cleaned_data 
             profesor_elegido.nombre=infoDict["nombre"]
             profesor_elegido.apellido=infoDict["apellido"]
             profesor_elegido.identificacion=infoDict["identificacion"]
@@ -271,8 +271,8 @@ def editarEstudiante(request, estudiante_identificacion):
 
     if request.method == 'POST':
         miFormulario = EstudianteFormulario(request.POST)
-        if miFormulario.is_valid(): #valida que los datos estén bien
-            infoDict = miFormulario.cleaned_data #la info del formulario se pasa a tipo diccionario
+        if miFormulario.is_valid():
+            infoDict = miFormulario.cleaned_data
             estudiante_elegido.nombre=infoDict["nombre"]
             estudiante_elegido.apellido=infoDict["apellido"]
             estudiante_elegido.identificacion=infoDict["identificacion"]
@@ -294,8 +294,8 @@ def editarCurso(request, curso_camada):
 
     if request.method == 'POST':
         miFormulario = CursoFormulario(request.POST)
-        if miFormulario.is_valid(): #valida que los datos estén bien
-            infoDict = miFormulario.cleaned_data #la info del formulario se pasa a tipo diccionario
+        if miFormulario.is_valid(): 
+            infoDict = miFormulario.cleaned_data 
             curso_elegido.nombre=infoDict["nombre"]
             curso_elegido.camada=infoDict["camada"]
             curso_elegido.comision =infoDict["comision"]
@@ -310,14 +310,15 @@ def editarCurso(request, curso_camada):
     return render(request, "AppCoder/editarCurso.html", {"formulario1": miFormulario})
 
 @login_required
-def editarEntregable(request, entregable_nombre):
-    entregable_elegido=Entregable.objects.get(nombre=entregable_nombre)
+def editarEntregable(request, entregable_identificador):
+    entregable_elegido=Entregable.objects.get(identificador=entregable_identificador)
 
     if request.method == 'POST':
         miFormulario = EntregableFormulario(request.POST)
-        if miFormulario.is_valid(): #valida que los datos estén bien
-            infoDict = miFormulario.cleaned_data #la info del formulario se pasa a tipo diccionario
+        if miFormulario.is_valid():
+            infoDict = miFormulario.cleaned_data
             entregable_elegido.nombre=infoDict["nombre"]
+            entregable_elegido.identificador=infoDict["identificador"]
             entregable_elegido.fechaEntrega=infoDict["fechaEntrega"]
             entregable_elegido.entregado =infoDict["entregado"]
 
@@ -326,30 +327,6 @@ def editarEntregable(request, entregable_nombre):
             return render(request, "AppCoder/index.html")
 
     else:
-        miFormulario = EntregableFormulario(initial={"nombre": entregable_elegido.nombre, "fechaEntrega": entregable_elegido.fechaEntrega, "entregado": entregable_elegido.entregado})
+        miFormulario = EntregableFormulario(initial={"nombre": entregable_elegido.nombre, "identificador": entregable_elegido.identificador, "fechaEntrega": entregable_elegido.fechaEntrega, "entregado": entregable_elegido.entregado})
 
     return render(request, "AppCoder/editarEntregable.html", {"formulario1": miFormulario})
-
-class CursoLista (ListView):
-    model = Curso
-    template_name= "AppCoder/verCursos_clase.html"
-
-class CursoCrear (LoginRequiredMixin, CreateView,):
-    model = Curso
-    fields = ["nombre", "camada", "comision"]
-    template_name = "AppCoder/crearCursos_clase.html"
-    success_url = "/AppCoder/cursos/clase"
-
-class CursoBorrar (LoginRequiredMixin, DeleteView):
-    model = Curso
-    template_name = "AppCoder/borrarCursos_clase.html"
-    success_url = "/AppCoder/cursos/clase"
-    #Tiene un problema y es que toca poner el ID del curso en la url del navegador
-
-class CursoEditar (LoginRequiredMixin, UpdateView):
-    model = Curso
-    fields = ["nombre", "camada", "comision"]
-    success_url = "/AppCoder/cursos/clase"
-    #Tiene un problema y es que toca poner el ID del curso en la url del navegador, no es muy claro cual se está eliminando
-
-

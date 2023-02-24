@@ -30,8 +30,8 @@
             <th scope="row">{{x.nombre}}</th>
             <td>{{x.fechaEntrega}}</td>
         {% if request.user.is_authenticated %}
-            <td><a href="{% url 'editarCurso' x.identificador %}"><button>Editar</button></a></td>
-            <td><a href="{% url 'borrarCursos' x.identificador %}"><button>Borrar</button></a></td>
+            <td><a href="{% url 'editarEntregable' x.identificador %}"><button>Editar</button></a></td>
+            <td><a href="{% url 'borrarEntregables' x.identificador %}"><button>Borrar</button></a></td>
             
         {% endif %}
         {% endfor %}

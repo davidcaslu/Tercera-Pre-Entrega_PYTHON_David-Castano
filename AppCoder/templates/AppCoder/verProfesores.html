@@ -37,8 +37,8 @@
                 <td>{{x.profesion}}</td>
                 <td>{{x.edad}}</td>
             {% if request.user.is_authenticated %}
-                <td><a href="{% url 'editarCurso' x.identificacion %}"><button>Editar</button></a></td>
-                <td><a href="{% url 'borrarCursos' x.identificacion %}"><button>Borrar</button></a></td>
+                <td><a href="{% url 'editarProfesor' x.identificacion %}"><button>Editar</button></a></td>
+                <td><a href="{% url 'borrarProfesores' x.identificacion %}"><button>Borrar</button></a></td>
                 
             {% endif %}
             {% endfor %}

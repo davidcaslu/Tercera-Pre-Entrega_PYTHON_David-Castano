@@ -1,0 +1,33 @@
+{% extends "AppCoder/padre.html" %}
+
+{% block titulo %}
+{% if request.user.is_authenticated %}
+    ¡Hola {{request.user.first_name}}!
+    <h2>¡Gracias por llegar hasta aquí!</h2>
+{% else %}
+    ¡Hola!
+    <h2>¡Gracias por llegar hasta aquí!</h2>
+{% endif %}
+{% endblock %}
+
+
+{% block informacion %}
+<br>
+<h3>Mi nombre es David Castaño </h3>
+<h4>Soy un realizador audiovisual de la ciudad de Medellín, Colombia. </h4>
+<br>
+{% endblock %}
+
+
+{% block infoAdicional %}
+                
+
+        <section class="testimonials text-center bg-light">
+            <div style="width: 650px; margin: 0 auto; text-align: justify;">
+            <p >Soy egresado de Comunicación Audiovisual y Multimedial de la Universidad de Antioquia. Como complemento a mi formación académica, fui pasante del Ministerio de Cultura en la Escuela de Cine y Televisión de la Universidad Nacional de Colombia (Bogotá) y ganador de la beca Artistas Jóvenes Talentos del Icetex para realizar un posgrado en Diseño Audiovisual y 3D en la ciudad de Barcelona, España. </p>
+            <br>
+            <p>Mis intereses en el mundo audiovisual van más allá de las cámaras y la edición, y actualmente estoy en búsqueda de nuevas herramientas que permitan potenciar mi trabajo, como podrían ser las inteligencias artificiales y el creative coding.
+            </p>    
+        </div>
+        </section>
+        {% endblock %}

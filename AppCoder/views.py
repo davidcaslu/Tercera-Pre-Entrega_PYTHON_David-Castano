@@ -48,6 +48,9 @@ def iniciarSesion(request):
     
     return render(request, "AppCoder/iniciarSesion.html", {"miFormulario1":miFormulario})
 
+def aboutMe(request):
+    return render(request, "AppCoder/aboutMe.html")
+
 
 def estudiantes(request):
     listaEstudiantes = Estudiante.objects.all()
@@ -66,11 +69,11 @@ def cursos(request):
     return render(request, "AppCoder/verCursos.html", {"listaCursos":listaCursos})
 
 @login_required
-def crearEstudiantes(request): #crear formulario con django
+def crearEstudiantes(request):
     if request.method == 'POST':
         miFormulario = EstudianteFormulario(request.POST)
-        if miFormulario.is_valid(): #valida que los datos estén bien
-            infoDict = miFormulario.cleaned_data #la info del formulario se pasa a tipo diccionario
+        if miFormulario.is_valid():
+            infoDict = miFormulario.cleaned_data
             estudiante1 = Estudiante(nombre=infoDict["nombre"], apellido=infoDict["apellido"], identificacion=infoDict["identificacion"], comision=infoDict["comision"], email=infoDict["email"])
             estudiante1.save()
 
@@ -82,11 +85,11 @@ def crearEstudiantes(request): #crear formulario con django
     return render(request, "AppCoder/crearEstudiantes.html", {"formulario1": miFormulario})
 
 @login_required
-def crearCursos(request): #crear formulario con django
+def crearCursos(request):
     if request.method == 'POST':
         miFormulario = CursoFormulario(request.POST)
-        if miFormulario.is_valid(): #valida que los datos estén bien
-            infoDict = miFormulario.cleaned_data #la info del formulario se pasa a tipo diccionario
+        if miFormulario.is_valid():
+            infoDict = miFormulario.cleaned_data
             curso1 = Curso(nombre=infoDict["nombre"], camada=infoDict["camada"], comision=infoDict["comision"])
             curso1.save()
 
@@ -101,8 +104,8 @@ def crearCursos(request): #crear formulario con django
 def crearProfesor(request): 
     if request.method == 'POST':
         miFormulario = ProfesorFormulario(request.POST)
-        if miFormulario.is_valid(): #valida que los datos estén bien
-            infoDict = miFormulario.cleaned_data #la info del formulario se pasa a tipo diccionario
+        if miFormulario.is_valid():
+            infoDict = miFormulario.cleaned_data
             profesor1 = Profesor(nombre=infoDict["nombre"], apellido=infoDict["apellido"], identificacion=infoDict["identificacion"], email=infoDict["email"], profesion=infoDict["profesion"], edad=infoDict["edad"])
             profesor1.save()
 
@@ -117,8 +120,8 @@ def crearProfesor(request):
 def crearEntregable(request): 
     if request.method == 'POST':
         miFormulario = EntregableFormulario(request.POST)
-        if miFormulario.is_valid(): #valida que los datos estén bien
-            infoDict = miFormulario.cleaned_data #la info del formulario se pasa a tipo diccionario
+        if miFormulario.is_valid():
+            infoDict = miFormulario.cleaned_data
             entregable1 = Entregable(nombre=infoDict["nombre"], identificador=infoDict["identificador"],fechaEntrega=infoDict["fechaEntrega"], entregado=infoDict["entregado"])
             entregable1.save()
 

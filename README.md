@@ -7,6 +7,8 @@ Se pueden crear usuarios nuevos con el botón de registrarse y posteriormente in
 
 Después de correr el servidor, se puede iniciar el recorrido desde cualquier página. Sin embargo se recomienda iniciar en http://127.0.0.1:8000/AppCoder/inicio
 
+En el footer se encuentra, al hacer click en el nombre, el enlace a about me. 
+
 
 Los datos de uno de los superusuarios es:
 

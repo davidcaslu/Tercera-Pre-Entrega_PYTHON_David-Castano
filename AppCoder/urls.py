@@ -12,6 +12,8 @@ urlpatterns = [
     path('iniciarSesion', iniciarSesion, name='iniciar sesion'),
     path('logOut', LogoutView.as_view(template_name="AppCoder/logout.html"), name='cerrar sesion'),
 
+    path('aboutMe', aboutMe, name='aboutMe'),
+
     #Ver
     path('verEstudiantes', estudiantes, name='Estudiantes'),
     path('verProfesores', profesores, name='Profesores'),
